@@ -1,0 +1,29 @@
+의존형 주입을 할 때, 자바 코드에서는 정적일 수 밖에 없다.
+
+Exam exam = new NewlecExam();
+ExamConsole console = new GridExamConsole();
+console.setExam(exam);
+
+이런 코드가 있다고 하면, exam 의 객체가 바뀔 수도 있고, console 객체가 바뀔 수도 있다.
+이런 것들을 동적으로 바꾸기 위해 따로 설정해줘야한다. 그것이 바로 스프링을 활용하는 것이다.
+
+XML 파일을 이용하여 데이터 기반으로 작성해준다. 자바 코드를 작성해본다.
+<bean> 이라는 태그를 사용하여 id에는 변수명, class에는 생성할 객체명을 사용한다.
+이 때 객체는 같은 이름의 클래스를 사용하는 다른 객체가 존재할 수 있으니 패키지 명까지 같이 명시해준다.
+
+객체를 통하여 호출(사용)되는 메서드와 그 파라미터들도 해당 객체의 <Bean> 태그 아래, <Property> 태그를 통해 명시해준다. 다만 지시서 규칙상 set은 생략하고 소문자로 사용한다.
+
+자세한 예시는 코드로 보자.
+
+Exam exam = new NewlecExam();
+ExamConsole console = new GridExamConsole();
+console.setExam(exam);
+
+=> xml 파일의 데이터 기반으로 변환 
+<bean id="exam" class="spring.di.entity.NewlecExam"/>
+<bean id="console" class="spring.di.ui.GridExamConsole">
+<property name="exam" value="" ref="exam"/> </bean>
+여기서 property 태그 내의 value와 ref는 name의 파라미터를 명시해주는 것 같다.
+그 파라미터는 해당 객체의 id를 가져오는데, 그 값이 ref타입이면 rgf에, value 타입이면 value에
+명시한다. 
+
