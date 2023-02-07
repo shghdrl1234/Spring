@@ -1,0 +1,14 @@
+package spring.di.ui;
+
+public class GridExamConsole implements ExamConsole {
+	private Exam exam;
+	
+	
+	
+	@Override
+	public void print() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,6 @@
+package spring.di.entuty;
+
+public interface Exam {
+	int total();
+	int avg();
+}

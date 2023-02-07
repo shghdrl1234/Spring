@@ -1,0 +1,5 @@
+package spring.di.entuty;
+
+public interface Exam {
+
+}

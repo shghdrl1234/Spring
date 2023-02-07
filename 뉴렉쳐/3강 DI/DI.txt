@@ -1,0 +1,50 @@
+스프링이란것을 배울때 가장 기본적인 기능은
+객체를 생성하고, 조립해주는 것임.
+그 기능을 해주는 것들이 DI(Dependecy Injection)와 IoC Container임.
+
+DI => 종속성 주입, 의존성 주입
+(부품 조립으로 해석하는 것도 좋다.)
+
+프로그램은 객체들의 조립관계에 의해 만들어진다.
+
+Class A {
+private B b;
+
+public A(){
+ b = new B();
+}
+}
+=> A 클래스가 생성되면, B는 자동적으로 딸려온다.
+=> A가 B를 일체형으로 가졌다, Composition has a 관계
+=> B는 A의 부품이다. 즉, Dependecy이다.
+=> A a = new A(); 를 하면, 내부의 부품(B)을 알지 못한다.
+
+
+Class A {
+private B b;
+
+public void setB(B b) {
+ this.b = b;
+}
+}
+=> 조립형.
+=> 결합력이 낮아진다, 객체들을 쉽게 갈아끼울 수 있다.
+=> A a = new A(); 를 하면, B b = new B(); 와 a.setB(b);가 필요하다.
+=> 부품(B)를 A에 꽂아줘야한다.
+=> 즉, B(Dependency)를 생성 한 후 , A 객체에 주입해줘야한다.
+=> Dependency는 쉽게 바꿀 수 있다는 장점이 있고, 조립을 해야한다는 단점이 있다.
+=> 조립 방법은 setter 또는 생성자로 조립한다.
+
+Setter Injection과 Construction Injection이라고 한다.
+
+// Setter Injection
+B b = new B();
+A a = new A();
+a.setB(b);
+
+
+// Construction Injection
+A a = new A(b);
+
+이 때, 조립을 해주는 DI가 있다. 그것이 바로 Spring이다.
+Spring을 이용하는 가장 기본적인 이유는 a.setB(b); 또는 A(b); 처럼 자동적으로 의존성을 주입해준다.

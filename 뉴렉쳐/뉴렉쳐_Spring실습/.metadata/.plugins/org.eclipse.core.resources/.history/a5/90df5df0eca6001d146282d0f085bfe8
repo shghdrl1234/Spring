@@ -1,0 +1,28 @@
+package spring.di;
+
+import spring.di.entuty.Exam;
+import spring.di.entuty.NewlecExam;
+import spring.di.ui.ExamConsole;
+import spring.di.ui.GridExamConsole;
+
+public class Program {
+
+	public static void main(String[] args) {
+		
+			//Exam exam = new NewlecExam();
+			/*
+			 * exam 이라는 객체를 주입하면서 결과가 달라지고 있음.
+			 */
+			//ExamConsole console = new InlineExamConsole(exam); // DI
+			//ExamConsole console = new GridExamConsole(exam);
+			// 현재는 코드를 작성했지만, 코드를 작성안하고 외부에서 해주는 작업은
+			// Spring에서 가능하다.
+
+		
+		Exam exam = new NewlecExam();
+		ExamConsole console = new GridExamConsole(); // 기본 생성자로 의존성 주입 하기 위한 코드
+		console.setExam(exam);
+		console.print();
+	}
+
+}

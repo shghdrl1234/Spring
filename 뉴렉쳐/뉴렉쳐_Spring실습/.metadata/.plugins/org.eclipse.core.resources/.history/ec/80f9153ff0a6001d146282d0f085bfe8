@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+<!-- 	지시서이기 때문에 데이터 기반으로 써야함. Bean이라는 태그를 이용하여야한다. -->
+<!-- 	id 에는 변수명, class에는 생성할 객체명을 사용한다. 이떄, 객체는 같은 이름의 클래스를 사용하는 -->
+<!-- 	다른 객체가 존재할 수 있으니, 패키지 명까지 같이 명시해준다. -->
+	
+<!-- 	Exam exam = new NewlecExam(); 와 동일 -->
+	<bean id="exam" class="spring.di.entity.NewlecExam"/>
+	
+<!-- 	ExamConsole console = new GridExamConsole(); -->
+	<bean id="console" class="spring.di.ui.GridExamConsole">
+
+<!-- 	console.setExam(exam); -->
+	<property name="exam" value="" ref="exam"/>
+	console의 메서드로 온 setExam은 property name으로 온다. 하지만
+	지시서 규칙상, set을 떼어내고 최초 소문자로 사용하기 때문에 exam이 된다.
+	파라미터의 exam이 name으로 온 것이다니다. 또한 value와 ref라는 속성이 있다.
+	설정하는 객체의 이름을 넣어준다.
+	
+	</bean>
+
+
+	
+
+</beans>
