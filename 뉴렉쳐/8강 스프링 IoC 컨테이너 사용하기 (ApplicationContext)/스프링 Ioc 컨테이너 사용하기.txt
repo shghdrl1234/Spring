@@ -1,0 +1,23 @@
+Spring의 Di 또는 그 지시서를 읽어와서 생성하고 조립해주는 Spring의 구체적인 객체 이름은
+ApplicationContext이다.
+
+ApplicationContext의 종류로는 
+ClassPathXmlApplicationContext, FileSystemXmlApplicationContext, XmlWebApplicationContext, AnnotationConfigApplicationContext 등이 있다.
+
+종류의 구분은 지시서(XML)를 넘길때 위치를 어떻게 알려주느냐에 딸라 달라진다.
+
+Maven을 통해 ApplictationContext를 임포트 할 수 있게 해준다.
+ApplictationContext 타입의 ClassPathXmlApplicationContext("지시하는 내용")의 객체를 생성해준다.
+
+ExamConsole 타입의 변수를 선언하고, ClassPathXmlApplicationContext 객체에서 bean에 설정한 것을 꺼내온다.
+=> getBean("설정한 이름")
+=> 이 때, 설정한 이름에 해당되는 것은 어떠한 객체인지 모르기 때문에 형변환을 해줘서 꺼내야한다.
+
+또는
+getBean(인터페이스.class)라고 하면 형변환 할 필요없이 인터페이스 타입에 참조될 수 있는 것을 얻어 준다.
+
+이러한 설정에서 우리는 자바 파일의 코드 변환 없이, XML에서의 설정만 바꿔서 결과를 바꿀 수 가 있다.
+
+자세한 것은 Spring 실습에서 코드로 확인해보면 될 것이다.
+
+
