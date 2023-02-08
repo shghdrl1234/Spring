@@ -1,0 +1,45 @@
+컬렉션 객체를 XML에서도 생성하고 초기화 할 수도 있다.
+
+방법은 기존 context를 통하여 getBean을 사용한다.
+
+이후 xml에 bean을 생성한다. class ="java.util.ArrayList"로 기입하고,
+컬렉션 객체를 참조하는 변수를 name에 기입한다.
+
+List<Exam> exams = (List<Exam>) context.getBean("exams"); 
+exams.add(new NewlecExam(1,1,1,1)); 
+
+라는 코드가 있을때 
+
+<bean name="exams" class="java.util.ArrayList"> 으로 bean을 설정해준다.
+=> 잘 동작함.
+
+Spring에서는 add는 세터가 아니기 때문에 property를 통해 세팅을 할 수 없다.
+하지만 컬렉션은 collection을 파라미터로 가지는 생성자가 있다.
+
+이 생성자를 통하여, new NewlecExam(1,1,1,1)의 값을 또 설정해준다.
+
+<bean name="exams" class="java.util.ArrayList"> => exams를 참조하는 arrayList 생성
+	<constructor-arg> => 생성자를 통하여 주입한다.
+		<bean class="spring.di.entity.NewlecExam" p:kor="10"/> => 생성자의 타입은 NewlecExam.
+		<ref bean="exam"/> => 생성자의 타입은 name이 exam이라는 bean을 참조하고 있는 객체명
+	</constructor-arg>
+</bean>
+
+즉, Exam클래스 타입이 지정된 List의 exams 변수는, ArrayList의 객체를 참조하고 있다.
+이 Arraylist 객체는 Exam을 구현한 NewlecExam의 객체와 exam이라는 이름을 가진 bean을 참조하고 있다.
+Arraylist => [(1,1,1,1), (?,?,?,?)]
+
+위의 bean 태그에서는 두 개의 ArrayList에 두 개의 요소가 들어 가 있다.\
+
+하지만, bean 태그가 또 복잡해 보이니 namespace 설정을 통하여 더 간단하게 만들 수 있다,.
+-> namespace에서 util 체크해준다.
+
+<util:list id="exams" list-class="java.util.ArrayList">
+		<bean class="spring.di.entity.NewlecExam" p:kor="10" p:math="20" p:eng="30" p:com="10"/>
+		<ref bean="exam"/>
+</util:list>
+
+
+<util:list> 태그에서 어떤 컬렉션 객체를 사용할 것인지 list-class로 구체화 시켜준다.
+이후 id는 참조변수를 적어준다.
+내부의 bean과 ref 는 요소이다.

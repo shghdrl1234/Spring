@@ -1,0 +1,33 @@
+생성자를 통해서 값을 설정하는 방법은 constructor-arg 를 이용하면된다.
+
+<bean id="exam" class="spruing.di.entity.NewlecExam">
+<constructor-arg value = "30"/>
+<constructor-arg value = "50"/>
+<constructor-arg value = "70"/>
+</bean>
+
+명시된 순서대로 들어간다.
+순서에 대한 명시를 주기 위해서는 index ="0"으로 순서를 나타내거나
+또는 name="컬럼명"을 주어서 설정할 수 있다.
+
+생성자 호출의 모호한 매개변수가 있다.
+생성자는 여러개인데, 각 생성자 마다 타입이 다를 수도 있다.
+이 때는 속성에 자료를 지정해줌으로써 타입을 명시해줄 수 있다.
+<bean id="exam" class="spruing.di.entity.NewlecExam">
+<constructor-arg value = "30" type="float"/>
+<constructor-arg value = "50" type="float" />
+<constructor-arg value = "70" type="float" />
+</bean>
+
+태그할게 많아서 간략하게 하고 싶으면 설정 처리기를 사용하면된다.
+namespace에서 p를 체크해준다.
+그러면 xml 파일에 xmlns:p="http://www.springframework.org/schema/p" 코드가 생성되어진다.
+
+namespace란.. 대부분 프로그래밍 관련 언어는 모듈이 있고, 모듈이 충돌할 수 있다.
+모듈간 식별을 위해 이름을 붙인 것이 namespace임
+bean도 충돌할 수가 있기 때문에, 어떤 설정 처리기가 처리해야하는지 이름을 넣어준다.
+즉, namespace는 모듈간 구분을 위해 또는 처리해야하는 것을 지정하기 위해 적어준다.
+
+설정 처리기를 설정해두고 아래와 같은 코드를 쓰면 koe의 exam이 가리키는 객체의 kor세터를 찾아가 10이라는
+값을 입력해준다.
+<bean id="exam" class="spruing.di.entity.NewlecExam" p:kor="10" /bean>

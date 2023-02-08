@@ -1,5 +1,8 @@
 package spring.di;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -53,6 +56,7 @@ public class Program {
 		// context에게 Bean을 달라고한다. console이라는 name을 가지고 있는 객체를.
 		// name에 해당되는 것은 어떠한 객체인지 모르기 떄문에, 형변환을 해줘서 꺼내야함.
 		
+		
 		// 자료형으로 바로 꺼낼 수도 있다. ExamConsol 타입에 참조될 수 있는 것을 얻어준다.
 		ExamConsole console = context.getBean(ExamConsole.class);
 		// 형싱 변환 필요없으며 선호되는 방식이며, 클래스명을 깔끔하게 설정할 수 있다.
@@ -60,6 +64,39 @@ public class Program {
 		// => 해당 인터페이스를 구현했기 때문? 
 		console.print();
 		
+		Exam exam = context.getBean(Exam.class);
+		System.out.println(exam.toString());
+		
+		/*
+		 * 컬렉션을 DI로 사용하기 위함.
+		 * 컬렉션 객체는 xml에서 기존과 같은 방법으로 bean을 통해 명시해주고
+		 * name은 참조변수의 이름, class는 java.util.ArrayList로 한다.
+		 * 그러면 컬렉션 객체 생성은 끝. 객체에 요소를 넣어야함.
+		 * add는 setter가 아니기 때문에 제한되는 것 처럼 보이지만.
+		 * 컬렉션 객체는 (Collection c)라는 파라미터를 가진 생성자를 보유하고 있다.
+		 * 
+		 * 그래서 컬렉션 객체를 만든 bean태그 내부에 생성자 태그를 만들어준다.
+		 * 이후 list태그를 사용하여, 요소를 나타낸다.
+		 * 
+		 * 아래 코드에서 생성자로 가져오는 것은 new newlecExam 이므로
+		 * 요소에 해당하는 것은 <bean> 태그를 사용하여 나타내거나,
+		 * 외부에 있는 <bean>을 참조 해올 수 있다.
+		 * 
+		 * namespace를 적절히 활용하여 사용가능하고, 이런 방식을 사용할 경우
+		 * 태그가 난잡해질 수 있다.
+		 * 
+		 * 그 땐 list를 전용으로 객체 생성하는 태그를 사용해보자
+		 * namespace util에 체크하고 xml에 <util:list> 태그를 만든 뒤,
+		 * 해당 태그 내부에는 요소로 무엇이 오는지 명시해주면 된다.
+		 */
+		List<Exam> exams = (List<Exam>) context.getBean("exams"); //new ArrayList<>();
+//		exams.add(new NewlecExam(1,1,1,1));
+
+		for(Exam e : exams) {
+			System.out.println(e);
+		}
+	
 	}
+	
 
 }
