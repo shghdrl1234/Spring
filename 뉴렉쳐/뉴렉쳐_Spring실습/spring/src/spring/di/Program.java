@@ -46,7 +46,7 @@ public class Program {
 		// ApplicationContext는 인터페이스 이다.
 		// 메이븐을 추가해야 임포트 된다.
 		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("spring/di/setting.xml");
+				new ClassPathXmlApplicationContext("spring/di/setting2.xml");
 		/* context가 (정확히 말하자면 classPathXml 객체)가 지시서를 잘 읽었다면, 지시서대로 객체를 만들고,
 		인젝션까지 해서 컨테이너에 잘 보관중.
 		컨테이너에 있는 객체를 사용하는 것은 id를 가지고 사용할 수 있고, class로 사용할 수 있음.
@@ -64,8 +64,11 @@ public class Program {
 		// => 해당 인터페이스를 구현했기 때문? 
 		console.print();
 		
-		Exam exam = context.getBean(Exam.class);
-		System.out.println(exam.toString());
+		/*
+		 * 어노테이션 적용을 위해서 일단 지워줌.
+		 */
+		//Exam exam = context.getBean(Exam.class);
+		//System.out.println(exam.toString());
 		
 		/*
 		 * 컬렉션을 DI로 사용하기 위함.
@@ -89,12 +92,12 @@ public class Program {
 		 * namespace util에 체크하고 xml에 <util:list> 태그를 만든 뒤,
 		 * 해당 태그 내부에는 요소로 무엇이 오는지 명시해주면 된다.
 		 */
-		List<Exam> exams = (List<Exam>) context.getBean("exams"); //new ArrayList<>();
+//		List<Exam> exams = (List<Exam>) context.getBean("exams"); //new ArrayList<>();
 //		exams.add(new NewlecExam(1,1,1,1));
 
-		for(Exam e : exams) {
-			System.out.println(e);
-		}
+//		for(Exam e : exams) {
+//			System.out.println(e);
+//		}
 	
 	}
 	

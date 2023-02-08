@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+
+	
+	<bean id="exam" class="spring.di.entity.NewlecExam"
+		autowire-candidate="false" abstract="false" p:kor="12" p:eng="33"/>
+
+
+	<bean id="console" class="spring.di.ui.InlineExamConsole">
+
+	<property name="exam" ref="exam"/>
+
+	
+	</bean>
+	
+	<util:list id="exams" list-class="java.util.ArrayList">
+		<bean class="spring.di.entity.NewlecExam"
+				autowire-candidate="false" abstract="false" p:kor="10" p:math="20" p:eng="30" p:com="10"/>
+				<ref bean="exam"/>
+	</util:list>
+	
+<
+
+</beans>
