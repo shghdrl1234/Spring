@@ -7,7 +7,9 @@ public void setExam(Exam exam) {
   <property name="exam" ref="exam"/>
 </bean>
 
-XML로 DI 한 것임.
+소스코드와 XML설정을 통하여 DI 한 것임.
+
+
 
 Spring이 가지고 있는 Ioc 컨테이너는 객체를 생성하고 조립해주는 객체를 담는 그릇 역할을한다.
 
@@ -19,7 +21,7 @@ console:inlineExamConsole => exam : Exam
 객체들이 생성되고, console객체가 exam객체를 참조하고 있는 모습이 만들어진다.
 
 @autowired를 사용시 문제가 되는 것은 Bean 객체에서 어떤 것을 근거로 setting이 되는 것인지 확고하지 않다.
-=> 기본적으로는 자료형을 기준으로 한다. 
+=> 기본적으로는 자료형을 기준으로 한다. // 소스코드의 setExam(Exam exam)에서 "Exam" 이다.
 => 자바 코드의 setter과 Bean의 class가 달라도 되는 경우는 setter의 자료형이 상위 인터페이스일 경우이다.  
 => 컨테이너에서는 자바 코드의 자료형과 부합되는 class를 자동으로 찾아 바인딩 시켜준다.
 
