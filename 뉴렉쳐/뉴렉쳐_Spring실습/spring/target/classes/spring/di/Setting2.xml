@@ -11,11 +11,11 @@
 <!-- 	객체들의 일부분은 어노테이션 되어있으니 찾아라! 라는 뜻 -->
 	<context:annotation-config />
 
-	<bean id="exam1" class="spring.di.entity.NewlecExam"
-		 p:kor="12" p:eng="33"/>
+<!-- 	<bean id="exam1" class="spring.di.entity.NewlecExam" -->
+<!-- 		 p:kor="12" p:eng="33"/> -->
 
-	<bean id="exam2" class="spring.di.entity.NewlecExam"
-		 p:kor="122" p:eng="323"/>
+<!-- 	<bean id="exam2" class="spring.di.entity.NewlecExam" -->
+<!-- 		 p:kor="122" p:eng="323"/> -->
 
 	<bean id="console" class="spring.di.ui.InlineExamConsole">
 <!-- 		xml 설정이 아닌 어노테이션 설정을 위해 프로퍼티를 지워준다 -->

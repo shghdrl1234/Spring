@@ -1,0 +1,105 @@
+package spring.di;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import spring.di.entity.Exam;
+import spring.di.entity.NewlecExam;
+import spring.di.ui.ExamConsole;
+import spring.di.ui.GridExamConsole;
+
+public class Program {
+
+	public static void main(String[] args) {
+		
+			//Exam exam = new NewlecExam();
+			/*
+			 * exam 이라는 객체를 주입하면서 결과가 달라지고 있음.
+			 */
+			//ExamConsole console = new InlineExamConsole(exam); // DI
+			//ExamConsole console = new GridExamConsole(exam);
+			// 현재는 코드를 작성했지만, 코드를 작성안하고 외부에서 해주는 작업은
+			// Spring에서 가능하다.
+
+		/* 결론 : 스프링에게 지시하는 방법으로 코드를 변경한다.
+		Exam exam = new NewlecExam();
+		ExamConsole console = new GridExamConsole(); // 기본 생성자로 의존성 주입 하기 위한 코드
+		
+		console.setExam(exam);
+		==========================================
+		원인 : exam 이나 console 객체가 바뀌게 되면, 결합관계도 바뀌어야한다.
+		이 주석 안에 있는 코드들은 바뀌어야함.
+		
+		우리에게는 아래에 살아있는 console.print()를 실행시키기 위한 console 객체가 필요하다.
+		ExamConsole console = ? 이 console 객체를 누군가가 (다른 곳에서) 설정해줘야함.
+		=> 즉, 위의 코드들을 설정으로 뺀 후, 객체화 해서 전달해주는 누군가가 있어야한다.
+		=> 그게 Spring의 역할이다.
+		=> Spring의 기능을 이용해서 위 코드의 관계를 분리한다! 라고 이해하면됨.
+		*/
+
+		/*
+		 * 지시서대로 꺼내는 작업.
+		 */
+		// ApplicationContext는 인터페이스 이다.
+		// 메이븐을 추가해야 임포트 된다.
+		ApplicationContext context = 
+				new ClassPathXmlApplicationContext("spring/di/setting3.xml");
+		/* context가 (정확히 말하자면 classPathXml 객체)가 지시서를 잘 읽었다면, 지시서대로 객체를 만들고,
+		인젝션까지 해서 컨테이너에 잘 보관중.
+		컨테이너에 있는 객체를 사용하는 것은 id를 가지고 사용할 수 있고, class로 사용할 수 있음.
+		*/
+		
+//		ExamConsole console = (ExamConsole) context.getBean("console");
+		// context에게 Bean을 달라고한다. console이라는 name을 가지고 있는 객체를.
+		// name에 해당되는 것은 어떠한 객체인지 모르기 떄문에, 형변환을 해줘서 꺼내야함.
+		
+		
+		// 자료형으로 바로 꺼낼 수도 있다. ExamConsol 타입에 참조될 수 있는 것을 얻어준다.
+		ExamConsole console = context.getBean(ExamConsole.class);
+		// 형싱 변환 필요없으며 선호되는 방식이며, 클래스명을 깔끔하게 설정할 수 있다.
+		// => 또한 xml 파일에서 class를 바꿔줘도 코드 수정없이 결과가 달라진다
+		// => 해당 인터페이스를 구현했기 때문? 
+		console.print();
+		
+		/*
+		 * 어노테이션 적용을 위해서 일단 지워줌.
+		 */
+		//Exam exam = context.getBean(Exam.class);
+		//System.out.println(exam.toString());
+		
+		/*
+		 * 컬렉션을 DI로 사용하기 위함.
+		 * 컬렉션 객체는 xml에서 기존과 같은 방법으로 bean을 통해 명시해주고
+		 * name은 참조변수의 이름, class는 java.util.ArrayList로 한다.
+		 * 그러면 컬렉션 객체 생성은 끝. 객체에 요소를 넣어야함.
+		 * add는 setter가 아니기 때문에 제한되는 것 처럼 보이지만.
+		 * 컬렉션 객체는 (Collection c)라는 파라미터를 가진 생성자를 보유하고 있다.
+		 * 
+		 * 그래서 컬렉션 객체를 만든 bean태그 내부에 생성자 태그를 만들어준다.
+		 * 이후 list태그를 사용하여, 요소를 나타낸다.
+		 * 
+		 * 아래 코드에서 생성자로 가져오는 것은 new newlecExam 이므로
+		 * 요소에 해당하는 것은 <bean> 태그를 사용하여 나타내거나,
+		 * 외부에 있는 <bean>을 참조 해올 수 있다.
+		 * 
+		 * namespace를 적절히 활용하여 사용가능하고, 이런 방식을 사용할 경우
+		 * 태그가 난잡해질 수 있다.
+		 * 
+		 * 그 땐 list를 전용으로 객체 생성하는 태그를 사용해보자
+		 * namespace util에 체크하고 xml에 <util:list> 태그를 만든 뒤,
+		 * 해당 태그 내부에는 요소로 무엇이 오는지 명시해주면 된다.
+		 */
+//		List<Exam> exams = (List<Exam>) context.getBean("exams"); //new ArrayList<>();
+//		exams.add(new NewlecExam(1,1,1,1));
+
+//		for(Exam e : exams) {
+//			System.out.println(e);
+//		}
+	
+	}
+	
+
+}

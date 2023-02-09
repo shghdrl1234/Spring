@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import spring.di.entity.Exam;
@@ -45,20 +46,25 @@ public class Program {
 		 */
 		// ApplicationContext는 인터페이스 이다.
 		// 메이븐을 추가해야 임포트 된다.
-		ApplicationContext context = 
-				new ClassPathXmlApplicationContext("spring/di/setting2.xml");
+		
+			ApplicationContext context = 
+					new AnnotationConfigApplicationContext(NewlecDIConfig.class);
+					// annotation을 사용하기 위해 주석처리
+//					new ClassPathXmlApplicationContext("spring/di/setting3.xml");
 		/* context가 (정확히 말하자면 classPathXml 객체)가 지시서를 잘 읽었다면, 지시서대로 객체를 만들고,
 		인젝션까지 해서 컨테이너에 잘 보관중.
 		컨테이너에 있는 객체를 사용하는 것은 id를 가지고 사용할 수 있고, class로 사용할 수 있음.
 		*/
 		
-		//ExamConsole console = (ExamConsole) context.getBean("console");
+		
+		
+		ExamConsole console = (ExamConsole) context.getBean("console");
 		// context에게 Bean을 달라고한다. console이라는 name을 가지고 있는 객체를.
 		// name에 해당되는 것은 어떠한 객체인지 모르기 떄문에, 형변환을 해줘서 꺼내야함.
 		
 		
 		// 자료형으로 바로 꺼낼 수도 있다. ExamConsol 타입에 참조될 수 있는 것을 얻어준다.
-		ExamConsole console = context.getBean(ExamConsole.class);
+//		ExamConsole console = context.getBean(ExamConsole.class);
 		// 형싱 변환 필요없으며 선호되는 방식이며, 클래스명을 깔끔하게 설정할 수 있다.
 		// => 또한 xml 파일에서 class를 바꿔줘도 코드 수정없이 결과가 달라진다
 		// => 해당 인터페이스를 구현했기 때문? 

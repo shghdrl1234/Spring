@@ -1,0 +1,45 @@
+객체를 생성하기 위한 어노테이션
+
+class InlineExamConsole{
+{
+	@Autowired
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+}
+
+<context:annotation-config />
+<bean id="exam1" class="spring.di.entity.NewlecExam"/>	
+<bean id="console" class="spring.di.ui.InlineExamConsole"/>
+
+이렇게 XML 파일에서 객체를 생성하는 데이터 코드가 있다.
+
+어노테이션으로 객체를 생성하기 위하여 이 코드들을 지울 것이다.
+
+일단은 <bean id="console" class="spring.di.ui.InlineExamConsole"/> 에 해당 하는 객체를
+어노테이션으로 생성해보자.
+=> 명시된 클래스를 찾아가 위에 @Component를 입력한다.
+=> 여기까지 진행하고 실행하면 오류가 남, 이유는 Spring에서 읽지 못한다.
+=> <context:annotation-config />를 통하여 어노테이션이 있는 객체를 알려주는데 InlineConsole 객체는 XML파일에서 생성된 것이 아니니, 어노테이션에 대해 확인하지 않는다.
+
+해결 방법은 <context:component-scan base-package="패키지"> 를 명시한다.
+=> Spring에게 패키지 내의 class중 @Component가 있는지 확인하라고 시키는 것.
+=> 있다면 객체가 생성됨. 그러면 Spring IoC 컨테이너에 해당 객체가 생성된다.
+=> 또한 해당 객체의 @Autowired도 읽을 수 있다.
+
+@Component
+class InlineExamConsole{
+{
+	@Autowired
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+}
+
+<context:component-scan base-package="spring.di.ui"/>
+<bean id="exam1" class="spring.di.entity.NewlecExam"/>
+
+=> 그러면 전체적인 데이터 코드가 줄어들게 됨.
+=> 고려해야 할 사항은 @Component 이후, 실행 파일에서 getBean이 가리키는 것이 bean의 이름일 경우
+=> @Component("해당 이름")을 써줘야 객체가 생성된다.
+=> 그러지 않으면 오류 발생함.

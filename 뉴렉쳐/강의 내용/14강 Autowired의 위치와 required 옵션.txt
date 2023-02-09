@@ -1,0 +1,71 @@
+Autowired는 Setter뿐만 아니라 생성자와 필드 윗부분에 위치시킬 수 있다.
+
+setter와 생성자에 위치시키는 것은 Spring에서 생성된 객체들이 어디로 찾아가야 할지 알려주는 것이기 때문에
+당연히 그 쪽에 위치 할 수 있다는 것을 안다.
+
+필드 윗부분에 위치 시키는 Autowired는 
+오버로드 생성자와 달리 기본 생성자에서 객체를 생성하는 형태라고 보면된다.\
+개념적으로는 기본생성자에서 바인딩을 하는 작업이다.
+
+
+@Autowired
+@Qualifier("exam2")
+private Exam exam;
+
+@Override
+public void setExam(Exam exam) {
+		this.exam = exam;
+}
+=> 여기서는 기본 생성자가 호출되면서 인젝션 되는 것이다.
+
+========================================
+private Exam exam;
+
+@Autowired
+@Qualifier("exam2")
+@Override
+public void setExam(Exam exam) {
+		this.exam = exam;
+}
+=> 여기서는 setter함수가 호출되면서 인젝션 되는 것이다.
+
+public InlineExamConsole() {
+	System.out.println("constructor");
+}
+
+@Autowired
+@Qualifier("exam2")
+public InlineExamConsole(Exam exam) 또는 (Exam exam1, Exam exam2) {
+	System.out.println("overloaded constructor");
+	this.exam = exam;
+}
+=> 오버로딩 된 생성자는 Qualifier에서 오류가 날 것이다.
+=> 오버로딩 된 생성자는 두 개 이상의 파라미터가 들어갈 수 있다고 생각함.
+=> 그래서 각자 지정할 수 있도록 파라미터에 지정 해야함.
+@Autowired
+public InlineExamConsole(@Qualifier(exam2) Exam Exam1) {
+	System.out.println("overloaded constructor");
+	this.exam = exam;
+}
+
+==========================================
+@Autowired
+@Qualifier("exam2")
+private Exam exam;
+	
+
+@Override
+public void print() {
+	System.out.printf("total is %d, avg is %f\n", exam.total(), exam.avg());
+}
+	
+이 상황에서 Spring 설정에서 exam2 객체가 없다면 에러가 발생한다.
+=> AutoWired는 되어있는데 바인딩할 객체가 없음.
+
+이 상황에서도 실행 로직이 실행될 수록 할 수 있는 옵션이 있다.
+ex) 바인딩 된 객체가 없을때 실행되어야 하는 코드가 있을 수도 있으니.
+=> 그럴땐, Autowired에 (required = false)를 추가하면 된다.
+
+
+
+

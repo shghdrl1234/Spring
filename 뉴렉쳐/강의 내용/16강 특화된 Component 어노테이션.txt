@@ -1,0 +1,27 @@
+어노테이션으로 객체를 생성했을때 초기값 설정 하는 방법은
+@Value("값")을 설정해주면 기본 값을 가지고 생성된다.
+
+@Component
+Public class NewlecExam implements Exam {
+	
+	@value("10")
+	private int kor;
+	@value("20")
+	private int eng;
+	private int math;
+	private int com;
+}
+
+
+
+@Component를 통해서 클래스들을 객체화가 가능하다.
+하지만 @Component는 MVC 방식으로 웹 어플리케이션을 만들게 될 경우
+웹 MVC를 구성하는 업무용 로직을 가지고 있는 코드들에 대해서 Component라고 한다.
+
+그래서 @Component를 @Controller @Service @Repository 로 나뉘어 부른다.
+즉, Component의 역할로써의 의미를 부여함, 객체화 하고자하는 클래스가 어떤 클래스인지 명시화 함.
+
+@Controller => 사용자 입출력 담당.
+@Service => 사용자 요구사항에 맞는 서비스 제공, 업무단위, 트랜잭션 단위
+@Repository => service에 데이터 제공.
+

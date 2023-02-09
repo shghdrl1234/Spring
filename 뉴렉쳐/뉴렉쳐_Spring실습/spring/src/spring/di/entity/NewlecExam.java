@@ -1,9 +1,16 @@
 package spring.di.entity;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+//@Component("exam")
+@Service("exam") // Component와 같은 기능을하지만, 역할로써 의미가 부여되어 있음
 public class NewlecExam implements Exam {
 
-	
+	@Value("21")
 	private int kor;
+	@Value("31")
 	private int eng;
 	private int math;
 	private int com;

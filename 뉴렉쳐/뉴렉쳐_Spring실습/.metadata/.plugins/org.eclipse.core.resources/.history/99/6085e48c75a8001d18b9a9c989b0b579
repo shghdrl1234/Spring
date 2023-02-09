@@ -1,0 +1,15 @@
+package spring.di;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import spring.di.entity.Exam;
+@ComponentScan("spring.di.ui")
+@Configuration
+public class NewlecDIConfig {
+	
+	// 컨테이너 안에서 id로 사용하기 위한 네이밍을 해야함.
+	public Exam exam() {
+		
+	}
+}
