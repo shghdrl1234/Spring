@@ -1,0 +1,47 @@
+package spring.aop;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+import spring.aop.entity.Exam;
+import spring.aop.entity.NewlecExam;
+
+public class Program {
+
+	public static void main(String[] args) {
+
+		Exam exam = new NewlecExam(1,1,1,1);
+		
+		// AOP는 Proxy를 사용해야함.
+		// 여기서 Exam은 가짜임.
+		// proxy를 사용하게 되면 위의 Exam exam ~~ 의 코드와 함께 보조업무로직이 실행됨.
+		Exam proxy = (Exam) Proxy.newProxyInstance(NewlecExam.class.getClassLoader()s, 
+				new Class[] {Exam.class},
+				new InvocationHandler() {
+					
+					@Override
+					public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+						long start = System.currentTimeMillis(); 
+						
+						// ============================
+						
+//						method.invoke(obj, args);
+						Object result = method.invoke(exam, args);
+						
+						
+						// ============================
+						
+						long end = System.currentTimeMillis();
+						
+						String message = (end - start) + "ms 시간이 걸렸습니다.";
+						System.out.println(message);
+						
+						return result;
+					}
+				});
+		
+		System.out.printf("total is %d\n", exam.total());
+	}
+
+}
