@@ -1,0 +1,26 @@
+weaving시 pointCut을 통하여 특정 메서드만 joinpoint로 가져올 수 있도록 할 수 있음.
+
+이 떄, 하나의 포인트에 하나의 어드바이져를 연결하여야한다.
+
+코드를 줄이기위해
+			
+<bean id="classicPointCut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+ 	<property name="mappedName" value="total"/> 
+</bean> 
+	 
+ <bean id="classicBeforeAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor"> 
+	<property name="advice" ref="logBeforeAdvice"></property> 
+	<property name="pointcut" ref="classicPointCut" ></property> 
+</bean> 
+
+위의 두 bean을 아래의 하나의 bean으로 변경할 수 있다.
+
+<bean id="classicBeforeAdvisor"class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+	<property name="advice" ref="logBeforeAdvice"></property> 
+	<property name="mappedNames">
+		<list>
+			<value>total</value> 
+			<value>avg</value> 
+		</list> 
+	</property> 
+</bean> 

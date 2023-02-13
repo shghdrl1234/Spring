@@ -1,0 +1,7 @@
+package spring.aop.advice;
+
+import org.springframework.aop.AfterReturningAdvice;
+
+public class LogAfterReturningAdvice implements AfterReturningAdvice {
+
+}

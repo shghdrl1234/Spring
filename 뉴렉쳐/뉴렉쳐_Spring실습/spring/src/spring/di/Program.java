@@ -49,7 +49,7 @@ public class Program {
 		
 			ApplicationContext context = 
 					new AnnotationConfigApplicationContext(NewlecDIConfig.class);
-					// annotation을 사용하기 위해 주석처리
+			// annotation을 사용하기 위해 주석처리
 //					new ClassPathXmlApplicationContext("spring/di/setting3.xml");
 		/* context가 (정확히 말하자면 classPathXml 객체)가 지시서를 잘 읽었다면, 지시서대로 객체를 만들고,
 		인젝션까지 해서 컨테이너에 잘 보관중.

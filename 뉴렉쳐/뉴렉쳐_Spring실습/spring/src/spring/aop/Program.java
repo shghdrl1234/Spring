@@ -4,18 +4,36 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import spring.aop.entity.Exam;
 import spring.aop.entity.NewlecExam;
+import spring.di.NewlecDIConfig;
 
 public class Program {
 
 	public static void main(String[] args) {
+		
+		ApplicationContext context = 
+//				new AnnotationConfigApplicationContext(NewlecDIConfig.class);
+				new ClassPathXmlApplicationContext("spring/aop/Setting3.xml");
 
+		Exam exam = (Exam) context.getBean("exam");
+		
+		System.out.printf("total is %d\n", exam.total());
+		System.out.printf("avg is %f\n", exam.avg());
+		
+		
+		/*
 		Exam exam = new NewlecExam(1,1,1,1);
+		
 		
 		// AOP는 Proxy를 사용해야함.
 		// 여기서 Exam은 가짜임.
 		// proxy를 사용하게 되면 위의 Exam exam ~~ 의 코드와 함께 보조업무로직이 실행됨.
+//				Proxy.newProxyInstance(null, null, null)
 		Exam proxy = (Exam) Proxy.newProxyInstance(NewlecExam.class.getClassLoader(), 
 				new Class[] {Exam.class},
 				new InvocationHandler() {
@@ -40,9 +58,8 @@ public class Program {
 						return result;
 					}
 				});
-		
-//		System.out.printf("total is %d\n", exam.total());
-		System.out.printf("total is %d\n", proxy.total());
+				*/
+
 	}
 
 }

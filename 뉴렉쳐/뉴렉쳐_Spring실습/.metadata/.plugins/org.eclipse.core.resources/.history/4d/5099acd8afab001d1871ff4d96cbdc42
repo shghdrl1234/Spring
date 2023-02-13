@@ -1,0 +1,19 @@
+package spring.aop.advice;
+
+import java.lang.reflect.Method;
+
+import org.springframework.aop.MethodBeforeAdvice;
+
+public class LogBeforeAdvice implements MethodBeforeAdvice{
+
+	@Override
+	public void before(Method method, Object[] args, Object target) throws Throwable {
+		// 만약에 구현하는데 있어서 현재 노출되는 함수의 이름, 함수의 파라미터를 가져오고 싶으면
+		// 위의 파라미터를 활용하면됨. 
+		// 하지만, 
+		System.out.println("앞에서 실행될 로직");
+		
+		
+	}
+
+}

@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="spring.di.entuty.Exam"/>
     <fullyQualifiedTypeName name="org.springframework.context.ApplicationContext"/>
-    <fullyQualifiedTypeName name="org.springframework.context.support.ClassPathXmlApplicationContext"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
@@ -19,4 +18,12 @@
     <fullyQualifiedTypeName name="java.lang.reflect.Proxy"/>
     <fullyQualifiedTypeName name="spring.aop.entity.Exam"/>
     <fullyQualifiedTypeName name="java.lang.reflect.InvocationHandler"/>
+    <fullyQualifiedTypeName name="org.springframework.context.support.ClassPathXmlApplicationContext"/>
+    <fullyQualifiedTypeName name="org.springframework.aop.framework.ProxyFactoryBean"/>
+    <fullyQualifiedTypeName name="org.aopalliance.intercept.MethodInterceptor"/>
+    <fullyQualifiedTypeName name="org.springframework.aop.MethodBeforeAdvice"/>
+    <fullyQualifiedTypeName name="org.springframework.aop.AfterReturningAdvice"/>
+    <fullyQualifiedTypeName name="org.springframework.aop.ThrowsAdvice"/>
+    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+    <fullyQualifiedTypeName name="org.springframework.aop.support.DefaultPointcutAdvisor"/>
 </qualifiedTypeNameHistroy>

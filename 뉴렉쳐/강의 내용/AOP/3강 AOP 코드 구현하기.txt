@@ -1,0 +1,38 @@
+AOP를 구현하기 이전에 업무로직이 있는 class가 필요하다.
+
+업무로직이 있는 class를 구현하였다면. 
+
+Proxy를 생성하여 메서드를 호출한다. 이 때, 프록시는 업무로직의 타입이 된다??
+
+Exam exam = new NewlecExam(1,1,1,1);
+
+Exam proxy = Proxy.newProxyInstance(loader, interfaces, h);
+
+loader => 실제 업무를 호출하여야한다. 실제 객체의 클래스를 호출해야함. NewlecExam.class
+=> 로더가 필요하니 NewlecExam.class.getClassLoader() 가 됨.
+
+interfaces => 인터페이스에 대한 정보. new class[] {Exam.class}
+h => 보조업무를 꽂을 수 있는 내용. new InvocationHandler() {
+
+@Override
+public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+long start = System.currentTimeMillis();
+						
+// ============================ => 보조업무로직
+						
+// method.invoke(obj, args); 
+=> obj : 실제 업무 객체를 넣어야함.
+=> args : 호출하는 메서드가 가진 파라미터를 가져옴. invoke가 오버라이딩 되면서 가져옴.
+
+Object result = method.invoke(exam, args);
+						
+						
+// ============================ => 보조업무로직
+						
+long end = System.currentTimeMillis(); 
+						
+String message = (end - start) + "ms 시간이 걸렸습니다.";
+System.out.println(message);
+					
+return result;
+}

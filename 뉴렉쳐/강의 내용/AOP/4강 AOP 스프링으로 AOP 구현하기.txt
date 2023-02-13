@@ -1,0 +1,54 @@
+AOP는 관점지향프로그래밍으로 
+개발자, 운영자 등의 관점으로 작성한 코드들이다. (사용자들의 요구사항이 아님.)
+
+AOP 구현 방식으로는 주업무로직 위 아래로 보조업무로직을 작성하면되었다.
+보조업무 로직이 필요하지 않을 때는 주석 처리를 하면 되는 것.
+
+하지만 특정상황에서는 코드를 넣고 빼던지, 또는 주석 처리 또는 해제를 하지 못하였다.
+(주 업무로직에 대한 코드를 보유하고 있지 않는 경우 등)
+
+그런 상황을 타개하기 위하여 Cross-Cutting Concern과 core Concern으로 분리하여 코드를 작성하였다.
+
+Cross-Cutting Concern은 Proxy를 이용하여 작성된다.
+
+Proxy.newProxyInstance(loader ,interfaces, h) 을 통해 보조업무로직을 구현하는데.
+loader에는 로더할 클래스를, interfaces에는 해당 인터페이스를, h에는 보조업무 로직을 구현한다.
+
+AOP를 구현할 때는 무조건 proxy가 필요하고, proxy를 꽂아넣을 수 있는 Cross-cutting-Concern이 필요하다.
+즉, 서로 도킹, 분리가 자유로워야함
+=> Spring이 도와줄 수 있음.
+
+Spring은 proxy를 제공하고 있다. 그 것을 활용하여 Ioc 컨테이너에 넣어서 사용한다.
+Ioc컨테이너에서 주업무와 보조업무를 따로 만들어 조립할 것이다.
+
+Spring에서는 보조로직의 업무를 4가지로 정의하고 있다. Advice라고 함.
+Before : 앞에만 필요한 보조로직, 
+After Running : 뒤에만 필요한 보조로직,
+After throwing : 예외를 처리하는 보조로직,
+Around : 앞 뒤 다 필요한 보조로직 
+
+OOOOO Advice.
+
+
+XML 파일 설정 : 
+
+<bean id="target" class="spring.aop.entity.NewlecExam" p:kor="1" p:eng="1" p:math="1" p:com="1" />
+<bean id="logAroundAdvice" class="spring.aop.advice.LogAroundAdvice"/>
+<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+=> Proxy 에는 두 가지 설정을 해줘야함.
+1. 실제 target이 되는 참조 / 값 또는 레퍼런스로 넣으면 된다.
+2. 보조업무로직에 관한 클래스(핸들러).
+
+	<property name ="target" ref="target"/>
+	<property name ="interceptorNames">
+		리스트는 참조목록이기 때문에 참조하는 것을 넣어주면됨.
+		Value 태그에는 참조하는 이름을 넣어주면 된다.
+		<list>
+			<value>logAroundAdvice</value>
+		</list>
+	</property>
+
+logAroundAdvice 클래스를 만들고 MethodInterceptor 인터페이스를 구현해준다.
+
+
+		

@@ -1,0 +1,13 @@
+업무로직이 실행되기 전에 할 것 : before
+결과값 반환 후 실행 될 것 : afterReturning
+타겟 호출 후 예외 발생시 : afterThrowing
+
+before => target => afterReturning
+       	   (예외발생시) =>  afterThrowing
+
+
+다른 Advice 인터페이스는 인자가 주어지는 반면에
+ThrowingAdvice가 구현할 함수는 정해져 있지 않다.
+
+=> throwAdvice가 구현해야할 함수가 정해질 수 없다.
+=> 이유는 예외에 관련된 것이기 때문에, 예외마다 함수의 인자가 달라지기 때문이다.
